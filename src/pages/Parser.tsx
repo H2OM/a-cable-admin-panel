@@ -52,6 +52,8 @@ export default function Parser() {
                 >
                     <InputNumber prefix={<NumberOutlined/>} style={{width: '100%'}} size="large"/>
                 </Form.Item>
+
+                {/*TODO Подгружать категории*/}
                 <Form.Item
                     name="categories_codes"
                     label={'Из категорий:'}
