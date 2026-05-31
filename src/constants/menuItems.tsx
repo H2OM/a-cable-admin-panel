@@ -96,14 +96,26 @@ export const menuItems: MenuItems[] = [
         ]
     },
     {
+        key: '/orders-group',
+        icon: <SnippetsOutlined/>,
+        label: 'Заказы',
+        children: [
+            {
+                key: '/orders',
+                icon: <TableOutlined/>,
+                label: <Link to="/orders">Все заказы</Link>,
+            },
+            {
+                key: '/orders/delivery',
+                icon: <SnippetsOutlined/>,
+                label: <Link to="/orders/delivery">Способы доставки</Link>,
+            }
+        ]
+    },
+    {
         key: '/brands',
         icon: <BarcodeOutlined/>,
         label: <Link to="/brands">Бренды</Link>
-    },
-    {
-        key: '/orders',
-        icon: <SnippetsOutlined/>,
-        label: <Link to="/orders">Заказы</Link>
     },
     {
         key: '/users',

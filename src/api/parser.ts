@@ -9,3 +9,7 @@ export const fromAnlan = async (data: AnlanParser) => {
         body: JSON.stringify(data)
     }, loading: 'Парсинг товаров...'});
 }
+
+export const searchAnlanCategories = async () => {
+
+}
