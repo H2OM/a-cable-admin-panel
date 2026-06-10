@@ -7,7 +7,11 @@ import {
     PartitionOutlined,
     PicRightOutlined,
     ShoppingOutlined,
-    SnippetsOutlined, TableOutlined, TeamOutlined, ThunderboltOutlined, UserOutlined
+    SnippetsOutlined,
+    TableOutlined,
+    TeamOutlined,
+    ThunderboltOutlined,
+    UserOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import type {MenuItems} from "@/types/common.ts";

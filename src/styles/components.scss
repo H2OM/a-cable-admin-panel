@@ -12,3 +12,31 @@
         }
     }
 }
+.stock {
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    margin: 7px 0;
+    &:before {
+        content: "";
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 100%;
+    }
+    &._in-stock {
+        color: var(--green-color);
+        &:before {
+            background-color: var(--green-color);
+        }
+    }
+    &._out-stock {
+        color: var(--red-color);
+        &:before {
+            background-color: var(--red-color);
+        }
+    }
+}

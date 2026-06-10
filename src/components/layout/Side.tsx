@@ -7,8 +7,6 @@ export default function Side({collapsed}: { collapsed: boolean }) {
     const {menuItems, openKeys, setOpenKeys} = useMenuItems();
     const location = useLocation();
 
-    console.log(openKeys);
-
     return (
         <Layout.Sider trigger={null} collapsible collapsed={collapsed} theme="light" width={400}
                       style={{boxShadow: '2px 0 8px 0 rgba(29,35,41,.05)'}}>

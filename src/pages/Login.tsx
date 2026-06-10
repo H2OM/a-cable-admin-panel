@@ -3,14 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authAPI} from "@api";
 import {Button, Card, Form, Input} from "antd";
-
-function UserOutlined() {
-    return null;
-}
-
-function LockOutlined() {
-    return null;
-}
+import {LockOutlined, UserOutlined} from "@ant-design/icons";
 
 export default function Login() {
     const {isAuthenticated, login} = useAuth();

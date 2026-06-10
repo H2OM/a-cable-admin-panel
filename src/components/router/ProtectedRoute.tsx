@@ -20,5 +20,4 @@ export default function ProtectedRoute({permission} : { permission: string }) {
     }, [isRightPermission]);
 
     return isRightPermission ? <Outlet /> : <Navigate to="/" replace />;
-
 }
