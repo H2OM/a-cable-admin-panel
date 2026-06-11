@@ -1,0 +1,7 @@
+.checkbox {
+    &._big {
+        height: 22px;
+        width: 22px;
+        --ant-control-interactive-size: 22px;
+    }
+}

@@ -25,6 +25,16 @@ export const search = async (query: string) => {
     return await _FETCH.request({url: `${API_URL_PUBLIC}/search?query=${query}`});
 }
 
+export const deleteMany = async (ids: number[])=> {
+    return await _FETCH.progressTrackingRequest({
+        url: `${API_URL}/delete`,
+        options: {
+            method: "POST",
+            body: JSON.stringify({ids})
+        }
+    });
+}
+
 export const oneWayPairVariation = async (data: {
     id: number;
     variation_id: number;

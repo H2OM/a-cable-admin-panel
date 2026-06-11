@@ -10,7 +10,7 @@ import MainLayout from "@layouts/MainLayout.tsx";
 import ParserAnlan from "@pages/parsers/ParserAnlan.tsx";
 import ProductsFastActions from "@pages/products/ProductsFastActions.tsx";
 import ProtectedRoute from "@components/router/ProtectedRoute.tsx";
-import ProductsTable from "@pages/products/ProductsTable.tsx";
+import ProductsGrid from "@pages/products/ProductsGrid.tsx";
 import ProductAdd from "@pages/products/ProductAdd.tsx";
 import ProductEdit from "@pages/products/ProductEdit.tsx";
 
@@ -28,7 +28,7 @@ export default function App() {
                             <Route element={<MainLayout/>}>
                                 <Route path={"/"} element={<Main/>}/>
                                 <Route element={<ProtectedRoute permission={'products'}/>}>
-                                    <Route path={"/products"} element={<ProductsTable/>}/>
+                                    <Route path={"/products"} element={<ProductsGrid/>}/>
                                     <Route element={<ProtectedRoute permission={'products.add'}/>}>
                                         <Route path={"/products/add/"} element={<ProductAdd/>}/>
                                     </Route>
