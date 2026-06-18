@@ -87,16 +87,18 @@ const request = async ({
     toastSuccess?: boolean | string;
     toastError?: boolean | string;
 }) => {
+    if(!(options.body instanceof FormData)) {
+        options.headers = {
+            ...options.headers,
+            "Content-Type": "application/json"
+        }
+    }
+
     if(token) {
         options.headers = {
             ...options.headers,
             "Authorization": `Bearer ${token}`
         }
-    }
-
-    options.headers = {
-        'Content-Type': 'application/json',
-        ...options.headers
     }
 
     return await fetch(url, options)
@@ -140,8 +142,7 @@ const progressTrackingRequest = async ({
     options = {method: "GET"},
     loading,
     success,
-    error,
-    json = true
+    error
 }: {
     url: string;
     options?: RequestInit;
@@ -150,17 +151,17 @@ const progressTrackingRequest = async ({
     error?: string;
     json?: boolean;
 }) => {
+    if(!(options.body instanceof FormData)) {
+        options.headers = {
+            ...options.headers,
+            "Content-Type": "application/json"
+        }
+    }
+
     if(token) {
         options.headers = {
             ...options.headers,
             "Authorization": `Bearer ${token}`
-        }
-    }
-
-    if(json) {
-        options.headers = {
-            ...options.headers,
-            'Content-Type': 'application/json'
         }
     }
 

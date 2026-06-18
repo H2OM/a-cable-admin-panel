@@ -1,19 +1,20 @@
 import {Link, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import type {Filter} from "@/types/filters.ts";
-import {filtersAPI} from "@api";
-import {Card, Checkbox, type CheckboxChangeEvent, Collapse, List, Skeleton, Space, Spin, Typography} from "antd";
+import {callbacksAPI} from "@api";
+import {Card, Checkbox, type CheckboxChangeEvent, List, Skeleton, Space, Spin, Typography} from "antd";
 import SelectActions from "@components/ui/grid/SelectActions.tsx";
 import ContextMenu from "@components/ui/grid/ContextMenu.tsx";
 import {filterMenuItems, filtersGridMenuItems} from "@constants/menuItems/filtersMenuItems.tsx";
 import {gridMenuItems} from "@constants/menuItems/gridMenuItems.tsx";
 import {EditOutlined} from "@ant-design/icons";
+import type {Callback} from "@/types/callbacks.ts";
+import {callbackStatusMap} from "@constants/callbackStatusMap.ts";
 
 export default function CallbacksGrid() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '15', 10);
-    const [items, setItems] = useState<Filter[]>([]);
+    const [items, setItems] = useState<Callback[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [count, setCount] = useState<number>(0);
     const [selectMode, setSelectMode] = useState<boolean>(false);
@@ -25,7 +26,7 @@ export default function CallbacksGrid() {
         setLoading(true);
 
         if (total === 0) {
-            const countResponse = await filtersAPI.getCount();
+            const countResponse = await callbacksAPI.getCount();
 
             if (countResponse.success) {
                 total = countResponse.data;
@@ -47,7 +48,7 @@ export default function CallbacksGrid() {
             return;
         }
 
-        const response = await filtersAPI.getAll(page, limit);
+        const response = await callbacksAPI.getAll(page, limit);
 
         setLoading(false);
 
@@ -69,7 +70,7 @@ export default function CallbacksGrid() {
 
     const deleteItemsHandler = async (ids: number[]) => {
         setLoading(true);
-        const response = await filtersAPI.deleteMany(ids);
+        const response = await callbacksAPI.deleteMany(ids);
         setLoading(false);
 
         if (response.success) {
@@ -102,7 +103,7 @@ export default function CallbacksGrid() {
         <div>
             <Space style={{marginBottom: '30px', alignItems: "center"}}>
                 <Typography.Title level={2} style={{margin: 0, marginBottom: '6px'}}>
-                    Все фильтры
+                    Все запросы обратной связи
                 </Typography.Title>
 
                 {selectMode ?
@@ -139,7 +140,7 @@ export default function CallbacksGrid() {
             <List
                 grid={{gutter: ['10px', '10px'], xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1, xxxl: 1}}
                 dataSource={loading && items.length === 0
-                    ? Array.from({length: limit}).map((_, i) => ({id: i} as Filter))
+                    ? Array.from({length: limit}).map((_, i) => ({id: i} as Callback))
                     : items
                 }
                 itemLayout="horizontal"
@@ -161,7 +162,7 @@ export default function CallbacksGrid() {
                         ) : (
                             <Card style={{width: '100%'}}
                                   actions={[
-                                      <Link to={`/filters/edit/${item.id}`}><EditOutlined key="edit"/></Link>,
+                                      <Link to={`/callbacks/edit/${item.id}`}><EditOutlined key="edit"/></Link>,
                                       <ContextMenu
                                           menuItems={filterMenuItems}
                                           handlers={{
@@ -183,46 +184,51 @@ export default function CallbacksGrid() {
                                         }}
                                     />
                                 }
-                                <div>
-                                    <Typography.Title level={4} style={{marginTop: 0}}>
-                                        {item.filter}&nbsp;&nbsp;
-                                        <span style={{color: 'var(--ant-color-icon)'}}>({item.id})</span>
-                                    </Typography.Title>
-                                    <p style={{color: 'var(--ant-color-icon)'}}>
-                                        Количество значений: {item.values.length}
+                                <p className="text-clamp" style={{margin: 0}}>
+                                    <b>{item.title}</b>&nbsp;&nbsp;
+                                    <span style={{color: 'var(--ant-color-icon)'}}>({item.id})</span>
+                                </p>
+                                <Space style={{justifyContent: "space-between"}}>
+                                    <p className="text-clamp" style={{margin: 0}}>
+                                        {item.user &&
+                                            <>
+                                                <b>
+                                                    {item.user.second_name} {item.user.first_name}
+                                                </b>
+                                                &nbsp;
+                                                <span style={{color: 'var(--ant-color-icon)'}}>
+                                                    ({item.user.id})
+                                                </span>
+                                            </>
+                                        }
                                     </p>
-                                </div>
-                                {item.values.length > 0 &&
-                                    <Collapse
-                                        ghost
-                                        size={"large"}
-                                        items={[{
-                                            key: '1',
-                                            label: (
-                                                <Typography.Title level={4} style={{margin: 0, marginTop: "-2px"}}>
-                                                    Значения
-                                                </Typography.Title>
-                                            ),
-                                            children: (
-                                                <Space orientation="vertical" style={{width: '100%'}}>
-                                                    {item.values.map(value => (
-                                                        <Card size={"small"} key={value.id}>
-                                                            <Typography.Title level={5} style={{margin: 0}}>
-                                                                {value.value}&nbsp;&nbsp;
-                                                                <span style={{color: 'var(--ant-color-icon)'}}>
-                                                                    {value.code}
-                                                                </span>&nbsp;&nbsp;
-                                                                <span style={{color: 'var(--ant-color-icon)'}}>
-                                                                    ({value.id})
-                                                                </span>
-                                                            </Typography.Title>
-                                                        </Card>
-                                                    ))}
-                                                </Space>
-                                            )
-                                        }]}
-                                    />
-                                }
+                                    <span>|</span>
+                                    <p style={{margin: 0, display: "flex", alignItems: "center"}}>
+                                        <span>Статус:&nbsp;</span>
+                                        <span
+                                            className={"dot " + (
+                                                item.status === '0' ? '_dark_orange'
+                                                    : item.status === '1' ? '_orange'
+                                                        : '_green'
+                                            )}
+                                            style={{margin: 0, marginTop: '1px'}}>
+                                            {callbackStatusMap[item.status as keyof typeof callbackStatusMap]}
+                                        </span>
+                                    </p>
+                                    <span>|</span>
+                                    <p className="text-clamp" style={{margin: 0}}>От: {item.email}</p>
+                                    <span>|</span>
+                                    <p className="text-clamp" style={{margin: 0}}>
+                                        Сообщение: {item.message.length > 20
+                                            ? (item.message.substring(0, 20) + '...')
+                                            : item.message
+                                        }
+                                    </p>
+                                    <span>|</span>
+                                    <p className="text-clamp" style={{margin: 0}}>Дата создания: {item.date}</p>
+                                    <span>|</span>
+                                    <p className="text-clamp" style={{margin: 0}}>Дата обновления: {item.update_date}</p>
+                                </Space>
                             </Card>
                         )}
                     </List.Item>

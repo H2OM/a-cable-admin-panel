@@ -1,7 +1,7 @@
 import type {Product} from "@/types/products.ts";
 import type {User} from "@/types/users.ts";
 
-export interface Orders {
+export interface Order {
     id: number;
     number: string;
     status: string;

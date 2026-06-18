@@ -18,6 +18,7 @@ import OrdersGrid from "@pages/orders/OrdersGrid.tsx";
 import CategoriesGrid from "@pages/categories/CategoriesGrid.tsx";
 import FiltersGrid from "@pages/filters/FiltersGrid.tsx";
 import BannersGrid from "@pages/banners/BannersGrid.tsx";
+import CallbacksGrid from "@pages/callbacks/callbacksGrid.tsx";
 
 export default function App() {
     return (
@@ -53,6 +54,9 @@ export default function App() {
                                 </Route>
                                 <Route element={<ProtectedRoute permission={'brands'}/>}>
                                     <Route path={"/brands"} element={<BrandsGrid/>}/>
+                                </Route>
+                                <Route element={<ProtectedRoute permission={'callbacks'}/>}>
+                                    <Route path={"/callbacks"} element={<CallbacksGrid/>}/>
                                 </Route>
                                 <Route element={<ProtectedRoute permission={'banners'}/>}>
                                     <Route path={"/banners"} element={<BannersGrid/>}/>

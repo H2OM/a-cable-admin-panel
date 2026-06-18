@@ -5,7 +5,7 @@ import {gridMenuItems} from "@constants/menuItems/gridMenuItems.tsx";
 import {Link, useSearchParams} from "react-router-dom";
 import {EditOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
-import type {Orders} from "@/types/orders.ts";
+import type {Order} from "@/types/orders.ts";
 import {ordersAPI} from "@api";
 import {orderGridMenuItems, ordersMenuItems} from "@constants/menuItems/ordersMenuItems.tsx";
 import {orderStatusMap} from "@constants/orderStatusMap.ts";
@@ -14,7 +14,7 @@ export default function OrdersGrid() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = parseInt(searchParams.get('page') || '1', 10);
     const limit = parseInt(searchParams.get('limit') || '30', 10);
-    const [orders, setOrders] = useState<Orders[]>([]);
+    const [orders, setOrders] = useState<Order[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [count, setCount] = useState<number>(0);
     const [selectMode, setSelectMode] = useState<boolean>(false);
@@ -170,7 +170,7 @@ export default function OrdersGrid() {
             <List
                 grid={{gutter: ['10px', '10px'], xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xxl: 1, xxxl: 1}}
                 dataSource={loading && orders.length === 0
-                    ? Array.from({length: limit}).map((_, i) => ({id: i} as Orders))
+                    ? Array.from({length: limit}).map((_, i) => ({id: i} as Order))
                     : orders
                 }
                 itemLayout="horizontal"

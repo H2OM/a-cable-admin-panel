@@ -7,5 +7,6 @@ import * as ordersAPI from './orders';
 import * as filtersAPI from './filters';
 import * as brandsAPI from './brands';
 import * as bannersAPI from './banners';
+import * as callbacksAPI from './callbacks';
 
-export {userAPI, authAPI, parserAPI, categoriesAPI, productsAPI, ordersAPI, filtersAPI, brandsAPI, bannersAPI};
+export {userAPI, authAPI, parserAPI, categoriesAPI, productsAPI, ordersAPI, filtersAPI, brandsAPI, bannersAPI, callbacksAPI};

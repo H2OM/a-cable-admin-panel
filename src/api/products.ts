@@ -41,8 +41,7 @@ export const update = async (data: FormData) => {
         options: {
             method: "POST",
             body: data
-        },
-        json: false
+        }
     }))
 }
 
@@ -52,8 +51,7 @@ export const add = async (data: FormData) => {
         options: {
             method: "POST",
             body: data
-        },
-        json: false
+        }
     }))
 }
 
