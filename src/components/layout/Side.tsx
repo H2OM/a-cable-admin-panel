@@ -23,7 +23,7 @@ export default function Side({collapsed}: { collapsed: boolean }) {
                 overflow: 'hidden',
                 whiteSpace: 'nowrap'
             }}>
-                {collapsed ? 'X_C' : 'X_CABLE.PANEL'}
+                {collapsed ? 'A_C' : 'A_CABLE.PANEL'}
             </div>
 
             <Menu theme="light"

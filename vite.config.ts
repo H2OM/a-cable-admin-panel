@@ -10,7 +10,7 @@ export default defineConfig({
     host: true,
     port: 5174,
     strictPort: true,
-    allowedHosts: ["127.0.0.1", 'x-cable-admin-panel'],
+    allowedHosts: ["127.0.0.1", 'a-cable-admin-panel'],
   },
   resolve: {
     alias: {

@@ -70,7 +70,7 @@ export default function MainLayout() {
                     boxShadow: 'var(--base-shadow)',
                     padding: '16px 50px'
                 }}>
-                    X_Cable Админ Панель ©{new Date().getFullYear()} Разработана для дипломной работы
+                    a_cable Админ Панель ©{new Date().getFullYear()} Разработана в рамках выпускной квалификационной работы
                 </Footer>
             </Layout>
         </Layout>
